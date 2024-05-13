@@ -2,10 +2,10 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 16.2
--- Dumped by pg_dump version 16.0
+-- Dumped from database version 16.3
+-- Dumped by pg_dump version 16.3
 
--- Started on 2024-05-13 10:39:45
+-- Started on 2024-05-13 18:31:15
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -18,6 +18,34 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- TOC entry 4 (class 2615 OID 2200)
+-- Name: public; Type: SCHEMA; Schema: -; Owner: pg_database_owner
+--
+
+CREATE SCHEMA public;
+
+
+ALTER SCHEMA public OWNER TO pg_database_owner;
+
+--
+-- TOC entry 4912 (class 0 OID 0)
+-- Dependencies: 4
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: pg_database_owner
+--
+
+COMMENT ON SCHEMA public IS 'standard public schema';
+
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 215 (class 1259 OID 17027)
+-- Name: event_categories; Type: TABLE; Schema: public; Owner: postgres
+--
+
 CREATE TABLE public.event_categories (
     id integer NOT NULL,
     name character varying(32) NOT NULL,
@@ -28,7 +56,7 @@ CREATE TABLE public.event_categories (
 ALTER TABLE public.event_categories OWNER TO postgres;
 
 --
--- TOC entry 216 (class 1259 OID 16583)
+-- TOC entry 216 (class 1259 OID 17030)
 -- Name: event_categories_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -43,7 +71,7 @@ ALTER TABLE public.event_categories ALTER COLUMN id ADD GENERATED ALWAYS AS IDEN
 
 
 --
--- TOC entry 217 (class 1259 OID 16584)
+-- TOC entry 217 (class 1259 OID 17031)
 -- Name: event_enrollments; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -62,7 +90,7 @@ CREATE TABLE public.event_enrollments (
 ALTER TABLE public.event_enrollments OWNER TO postgres;
 
 --
--- TOC entry 218 (class 1259 OID 16587)
+-- TOC entry 218 (class 1259 OID 17034)
 -- Name: event_enrollments_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -77,18 +105,18 @@ ALTER TABLE public.event_enrollments ALTER COLUMN id ADD GENERATED ALWAYS AS IDE
 
 
 --
--- TOC entry 219 (class 1259 OID 16588)
+-- TOC entry 219 (class 1259 OID 17035)
 -- Name: event_locations; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.event_locations (
     id integer NOT NULL,
     id_location integer NOT NULL,
-    name character varying(25) NOT NULL,
-    full_address character(50) NOT NULL,
+    name character varying(250) NOT NULL,
+    full_address character(500) NOT NULL,
     max_capacity integer NOT NULL,
-    latitude character varying(50) NOT NULL,
-    longitude character varying(50) NOT NULL,
+    latitude character varying(500) NOT NULL,
+    longitude character varying(500) NOT NULL,
     id_creator_user integer NOT NULL
 );
 
@@ -96,7 +124,7 @@ CREATE TABLE public.event_locations (
 ALTER TABLE public.event_locations OWNER TO postgres;
 
 --
--- TOC entry 220 (class 1259 OID 16591)
+-- TOC entry 220 (class 1259 OID 17038)
 -- Name: event_locations_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -111,7 +139,7 @@ ALTER TABLE public.event_locations ALTER COLUMN id ADD GENERATED ALWAYS AS IDENT
 
 
 --
--- TOC entry 221 (class 1259 OID 16592)
+-- TOC entry 221 (class 1259 OID 17039)
 -- Name: event_tags; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -125,7 +153,7 @@ CREATE TABLE public.event_tags (
 ALTER TABLE public.event_tags OWNER TO postgres;
 
 --
--- TOC entry 222 (class 1259 OID 16595)
+-- TOC entry 222 (class 1259 OID 17042)
 -- Name: event_tags_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -140,7 +168,7 @@ ALTER TABLE public.event_tags ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
--- TOC entry 223 (class 1259 OID 16596)
+-- TOC entry 223 (class 1259 OID 17043)
 -- Name: events; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -162,7 +190,7 @@ CREATE TABLE public.events (
 ALTER TABLE public.events OWNER TO postgres;
 
 --
--- TOC entry 224 (class 1259 OID 16599)
+-- TOC entry 224 (class 1259 OID 17046)
 -- Name: events_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -177,7 +205,7 @@ ALTER TABLE public.events ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
--- TOC entry 225 (class 1259 OID 16600)
+-- TOC entry 225 (class 1259 OID 17047)
 -- Name: locations; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -193,7 +221,7 @@ CREATE TABLE public.locations (
 ALTER TABLE public.locations OWNER TO postgres;
 
 --
--- TOC entry 226 (class 1259 OID 16603)
+-- TOC entry 226 (class 1259 OID 17052)
 -- Name: locations_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -208,7 +236,7 @@ ALTER TABLE public.locations ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
--- TOC entry 227 (class 1259 OID 16604)
+-- TOC entry 227 (class 1259 OID 17053)
 -- Name: provinces; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -225,7 +253,7 @@ CREATE TABLE public.provinces (
 ALTER TABLE public.provinces OWNER TO postgres;
 
 --
--- TOC entry 228 (class 1259 OID 16607)
+-- TOC entry 228 (class 1259 OID 17056)
 -- Name: provinces_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -240,7 +268,7 @@ ALTER TABLE public.provinces ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
--- TOC entry 229 (class 1259 OID 16608)
+-- TOC entry 229 (class 1259 OID 17057)
 -- Name: tags; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -253,7 +281,7 @@ CREATE TABLE public.tags (
 ALTER TABLE public.tags OWNER TO postgres;
 
 --
--- TOC entry 230 (class 1259 OID 16611)
+-- TOC entry 230 (class 1259 OID 17060)
 -- Name: tags_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -268,7 +296,7 @@ ALTER TABLE public.tags ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
--- TOC entry 231 (class 1259 OID 16612)
+-- TOC entry 231 (class 1259 OID 17061)
 -- Name: users; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -284,7 +312,7 @@ CREATE TABLE public.users (
 ALTER TABLE public.users OWNER TO postgres;
 
 --
--- TOC entry 232 (class 1259 OID 16615)
+-- TOC entry 232 (class 1259 OID 17064)
 -- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -299,7 +327,7 @@ ALTER TABLE public.users ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
--- TOC entry 4835 (class 0 OID 16580)
+-- TOC entry 4889 (class 0 OID 17027)
 -- Dependencies: 215
 -- Data for Name: event_categories; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -311,7 +339,7 @@ INSERT INTO public.event_categories OVERRIDING SYSTEM VALUE VALUES (4, 'Curso', 
 
 
 --
--- TOC entry 4837 (class 0 OID 16584)
+-- TOC entry 4891 (class 0 OID 17031)
 -- Dependencies: 217
 -- Data for Name: event_enrollments; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -325,15 +353,30 @@ INSERT INTO public.event_enrollments OVERRIDING SYSTEM VALUE VALUES (6, 3, 6, NU
 
 
 --
--- TOC entry 4839 (class 0 OID 16588)
+-- TOC entry 4893 (class 0 OID 17035)
 -- Dependencies: 219
 -- Data for Name: event_locations; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO public.event_locations OVERRIDING SYSTEM VALUE VALUES (4, 7, 'Carhué', 'Carhué                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ', 150, '-37.179481506347656', '-62.75999069213867', 2);
+INSERT INTO public.event_locations OVERRIDING SYSTEM VALUE VALUES (5, 8, 'Colonia San Miguel Arcángel', 'Colonia San Miguel Arcángel                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ', 100, '-37.44901657104492', '-63.117156982421875', 3);
+INSERT INTO public.event_locations OVERRIDING SYSTEM VALUE VALUES (6, 9, 'Delfín Huer', 'Delfín Huer                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ', 80, '-37.32110595703125', '-63.2343864440918', 4);
+INSERT INTO public.event_locations OVERRIDING SYSTEM VALUE VALUES (7, 10, 'Espartillar', 'Espartillar                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ', 120, '-37.3574104309082', '-62.43838119506836', 5);
+INSERT INTO public.event_locations OVERRIDING SYSTEM VALUE VALUES (8, 11, 'Esteban Agustín Gascón', 'Esteban Agustín Gascón                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ', 90, '-37.45583724975586', '-63.254310607910156', 6);
+INSERT INTO public.event_locations OVERRIDING SYSTEM VALUE VALUES (9, 12, 'La Pala', 'La Pala                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ', 70, '-36.66392135620117', '-63.3664665222168', 7);
+INSERT INTO public.event_locations OVERRIDING SYSTEM VALUE VALUES (10, 13, 'Maza', 'Maza                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ', 100, '-36.800315856933594', '-63.33928298950195', 8);
+INSERT INTO public.event_locations OVERRIDING SYSTEM VALUE VALUES (11, 14, 'Rivera', 'Rivera                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ', 80, '-37.16059494018555', '-63.241790771484375', 9);
+INSERT INTO public.event_locations OVERRIDING SYSTEM VALUE VALUES (12, 15, 'Villa Margarita', 'Villa Margarita                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ', 150, '-37.46135330200195', '-63.24217224121094', 10);
+INSERT INTO public.event_locations OVERRIDING SYSTEM VALUE VALUES (3, 6, 'Ciudad de Buenos Aires', 'Ciudad de Buenos Aires                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ', 200, '-34.60841751098633', '-58.372135162353516', 1);
+INSERT INTO public.event_locations OVERRIDING SYSTEM VALUE VALUES (13, 16, 'Adolfo Gonzales Chaves', 'Adolfo Gonzales Chaves                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ', 120, '-38.032371520996094', '-60.09939193725586', 11);
+INSERT INTO public.event_locations OVERRIDING SYSTEM VALUE VALUES (14, 17, 'De La Garma', 'De La Garma                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ', 100, '-37.9665412902832', '-60.416786193847656', 12);
+INSERT INTO public.event_locations OVERRIDING SYSTEM VALUE VALUES (15, 18, 'Juan E. Barra', 'Juan E. Barra                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       ', 80, '-37.820037841796875', '-60.4820556640625', 13);
+INSERT INTO public.event_locations OVERRIDING SYSTEM VALUE VALUES (16, 19, 'Vásquez', 'Vásquez                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ', 70, '-38.17580032348633', '-60.16979217529297', 14);
+INSERT INTO public.event_locations OVERRIDING SYSTEM VALUE VALUES (17, 20, 'Alberti', 'Alberti                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             ', 90, '-35.03157424926758', '-60.2802848815918', 15);
 
 
 --
--- TOC entry 4841 (class 0 OID 16592)
+-- TOC entry 4895 (class 0 OID 17039)
 -- Dependencies: 221
 -- Data for Name: event_tags; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -345,7 +388,7 @@ INSERT INTO public.event_tags OVERRIDING SYSTEM VALUE VALUES (4, 3, 3);
 
 
 --
--- TOC entry 4843 (class 0 OID 16596)
+-- TOC entry 4897 (class 0 OID 17043)
 -- Dependencies: 223
 -- Data for Name: events; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -356,7 +399,7 @@ INSERT INTO public.events OVERRIDING SYSTEM VALUE VALUES (3, 'Seminario de Progr
 
 
 --
--- TOC entry 4845 (class 0 OID 16600)
+-- TOC entry 4899 (class 0 OID 17047)
 -- Dependencies: 225
 -- Data for Name: locations; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -459,39 +502,40 @@ INSERT INTO public.locations OVERRIDING SYSTEM VALUE VALUES (100, 'Colonia Mauri
 
 
 --
--- TOC entry 4847 (class 0 OID 16604)
+-- TOC entry 4901 (class 0 OID 17053)
 -- Dependencies: 227
 -- Data for Name: provinces; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (2, 'Ciudad Autónoma de Buenos Aires', 'Ciudad Autónoma de Buenos Aires', -35, -58, NULL);
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (3, 'Buenos Aires', 'Provincia de Buenos Aires', -37, -61, NULL);
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (4, 'Catamarca', 'Provincia de Catamarca', -27, -67, NULL);
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (5, 'Córdoba', 'Provincia de Córdoba', -32, -64, NULL);
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (6, 'Corrientes', 'Provincia de Corrientes', -29, -58, NULL);
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (7, 'Chaco', 'Provincia del Chaco', -26, -61, NULL);
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (8, 'Chubut', 'Provincia del Chubut', -44, -69, NULL);
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (9, 'Entre Ríos', 'Provincia de Entre Ríos', -32, -59, NULL);
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (10, 'Formosa', 'Provincia de Formosa', -25, -60, NULL);
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (11, 'Jujuy', 'Provincia de Jujuy', -23, -66, NULL);
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (12, 'La Pampa', 'Provincia de La Pampa', -37, -65, NULL);
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (13, 'La Rioja', 'Provincia de La Rioja', -30, -67, NULL);
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (14, 'Mendoza', 'Provincia de Mendoza', -35, -69, NULL);
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (15, 'Misiones', 'Provincia de Misiones', -27, -55, NULL);
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (16, 'Neuquén', 'Provincia del Neuquén', -39, -70, NULL);
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (17, 'Río Negro', 'Provincia de Río Negro', -40, -67, NULL);
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (18, 'Salta', 'Provincia de Salta', -24, -65, NULL);
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (19, 'San Juan', 'Provincia de San Juan', -31, -69, NULL);
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (20, 'San Luis', 'Provincia de San Luis', -34, -66, NULL);
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (21, 'Santa Cruz', 'Provincia de Santa Cruz', -49, -70, NULL);
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (22, 'Santa Fe', 'Provincia de Santa Fe', -31, -61, NULL);
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (23, 'Santiago del Estero', 'Provincia de Santiago del Estero', -28, -63, NULL);
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (24, 'Tucumán', 'Provincia de Tucumán', -27, -65, NULL);
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (25, 'Tierra del Fuego, Antártida e Islas del Atlántico Sur', 'Provincia de Tierra del Fuego, Antártida e Islas del Atlántico Sur', -83, -51, NULL);
+INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (2, 'juanchilandia', 'pepelandiaaadejuanchi', -35, -58, NULL);
+INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (3, 'Ciudad Autónoma de Buenos Aires', 'Ciudad Autónoma de Buenos Aires', -35, -58, NULL);
+INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (4, 'Buenos Aires', 'Provincia de Buenos Aires', -37, -61, NULL);
+INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (5, 'Catamarca', 'Provincia de Catamarca', -27, -67, NULL);
+INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (6, 'Córdoba', 'Provincia de Córdoba', -32, -64, NULL);
+INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (7, 'Corrientes', 'Provincia de Corrientes', -29, -58, NULL);
+INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (8, 'Chaco', 'Provincia del Chaco', -26, -61, NULL);
+INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (9, 'Chubut', 'Provincia del Chubut', -44, -69, NULL);
+INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (10, 'Entre Ríos', 'Provincia de Entre Ríos', -32, -59, NULL);
+INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (11, 'Formosa', 'Provincia de Formosa', -25, -60, NULL);
+INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (12, 'Jujuy', 'Provincia de Jujuy', -23, -66, NULL);
+INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (13, 'La Pampa', 'Provincia de La Pampa', -37, -65, NULL);
+INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (14, 'La Rioja', 'Provincia de La Rioja', -30, -67, NULL);
+INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (15, 'Mendoza', 'Provincia de Mendoza', -35, -69, NULL);
+INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (16, 'Misiones', 'Provincia de Misiones', -27, -55, NULL);
+INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (17, 'Neuquén', 'Provincia del Neuquén', -39, -70, NULL);
+INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (18, 'Río Negro', 'Provincia de Río Negro', -40, -67, NULL);
+INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (19, 'Salta', 'Provincia de Salta', -24, -65, NULL);
+INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (20, 'San Juan', 'Provincia de San Juan', -31, -69, NULL);
+INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (21, 'San Luis', 'Provincia de San Luis', -34, -66, NULL);
+INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (22, 'Santa Cruz', 'Provincia de Santa Cruz', -49, -70, NULL);
+INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (23, 'Santa Fe', 'Provincia de Santa Fe', -31, -61, NULL);
+INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (24, 'Santiago del Estero', 'Provincia de Santiago del Estero', -28, -63, NULL);
+INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (25, 'Tucumán', 'Provincia de Tucumán', -27, -65, NULL);
+INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (26, 'Tierra del Fuego, Antártida e Islas del Atlántico Sur', 'Provincia de Tierra del Fuego, Antártida e Islas del Atlántico Sur', -83, -51, NULL);
 
 
 --
--- TOC entry 4849 (class 0 OID 16608)
+-- TOC entry 4903 (class 0 OID 17057)
 -- Dependencies: 229
 -- Data for Name: tags; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -502,7 +546,7 @@ INSERT INTO public.tags OVERRIDING SYSTEM VALUE VALUES (3, 'Programación');
 
 
 --
--- TOC entry 4851 (class 0 OID 16612)
+-- TOC entry 4905 (class 0 OID 17061)
 -- Dependencies: 231
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -513,7 +557,7 @@ INSERT INTO public.users OVERRIDING SYSTEM VALUE VALUES (3, 'Luis', 'López', 'l
 
 
 --
--- TOC entry 4859 (class 0 OID 0)
+-- TOC entry 4913 (class 0 OID 0)
 -- Dependencies: 216
 -- Name: event_categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -522,7 +566,7 @@ SELECT pg_catalog.setval('public.event_categories_id_seq', 4, true);
 
 
 --
--- TOC entry 4860 (class 0 OID 0)
+-- TOC entry 4914 (class 0 OID 0)
 -- Dependencies: 218
 -- Name: event_enrollments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -531,16 +575,16 @@ SELECT pg_catalog.setval('public.event_enrollments_id_seq', 6, true);
 
 
 --
--- TOC entry 4861 (class 0 OID 0)
+-- TOC entry 4915 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: event_locations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.event_locations_id_seq', 3, true);
+SELECT pg_catalog.setval('public.event_locations_id_seq', 17, true);
 
 
 --
--- TOC entry 4862 (class 0 OID 0)
+-- TOC entry 4916 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: event_tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -549,7 +593,7 @@ SELECT pg_catalog.setval('public.event_tags_id_seq', 4, true);
 
 
 --
--- TOC entry 4863 (class 0 OID 0)
+-- TOC entry 4917 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: events_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -558,7 +602,7 @@ SELECT pg_catalog.setval('public.events_id_seq', 3, true);
 
 
 --
--- TOC entry 4864 (class 0 OID 0)
+-- TOC entry 4918 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: locations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -567,16 +611,16 @@ SELECT pg_catalog.setval('public.locations_id_seq', 4042, true);
 
 
 --
--- TOC entry 4865 (class 0 OID 0)
+-- TOC entry 4919 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: provinces_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.provinces_id_seq', 25, true);
+SELECT pg_catalog.setval('public.provinces_id_seq', 26, true);
 
 
 --
--- TOC entry 4866 (class 0 OID 0)
+-- TOC entry 4920 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -585,7 +629,7 @@ SELECT pg_catalog.setval('public.tags_id_seq', 3, true);
 
 
 --
--- TOC entry 4867 (class 0 OID 0)
+-- TOC entry 4921 (class 0 OID 0)
 -- Dependencies: 232
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -594,7 +638,7 @@ SELECT pg_catalog.setval('public.users_id_seq', 3, true);
 
 
 --
--- TOC entry 4675 (class 2606 OID 16617)
+-- TOC entry 4729 (class 2606 OID 17066)
 -- Name: event_categories event_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -603,7 +647,7 @@ ALTER TABLE ONLY public.event_categories
 
 
 --
--- TOC entry 4677 (class 2606 OID 16619)
+-- TOC entry 4731 (class 2606 OID 17068)
 -- Name: event_enrollments event_enrollments_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -612,7 +656,7 @@ ALTER TABLE ONLY public.event_enrollments
 
 
 --
--- TOC entry 4679 (class 2606 OID 16621)
+-- TOC entry 4733 (class 2606 OID 17070)
 -- Name: event_locations event_locations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -621,7 +665,7 @@ ALTER TABLE ONLY public.event_locations
 
 
 --
--- TOC entry 4681 (class 2606 OID 16623)
+-- TOC entry 4735 (class 2606 OID 17072)
 -- Name: event_tags event_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -630,7 +674,7 @@ ALTER TABLE ONLY public.event_tags
 
 
 --
--- TOC entry 4683 (class 2606 OID 16625)
+-- TOC entry 4737 (class 2606 OID 17074)
 -- Name: events events_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -639,7 +683,7 @@ ALTER TABLE ONLY public.events
 
 
 --
--- TOC entry 4685 (class 2606 OID 16627)
+-- TOC entry 4739 (class 2606 OID 17076)
 -- Name: locations locations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -648,7 +692,7 @@ ALTER TABLE ONLY public.locations
 
 
 --
--- TOC entry 4687 (class 2606 OID 16629)
+-- TOC entry 4741 (class 2606 OID 17078)
 -- Name: provinces provinces_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -657,7 +701,7 @@ ALTER TABLE ONLY public.provinces
 
 
 --
--- TOC entry 4689 (class 2606 OID 16631)
+-- TOC entry 4743 (class 2606 OID 17080)
 -- Name: tags tags_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -666,7 +710,7 @@ ALTER TABLE ONLY public.tags
 
 
 --
--- TOC entry 4691 (class 2606 OID 16633)
+-- TOC entry 4745 (class 2606 OID 17082)
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -674,7 +718,7 @@ ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
 
 
--- Completed on 2024-05-13 10:39:45
+-- Completed on 2024-05-13 18:31:15
 
 --
 -- PostgreSQL database dump complete
