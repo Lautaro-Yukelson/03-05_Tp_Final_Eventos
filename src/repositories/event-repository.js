@@ -37,7 +37,8 @@ export default class EventRepository {
                 client.release();
             }
     }
-    async getEventDetails({id}) {
+
+    async getEventDetails(id) {
         const client = await pool.connect();
         try {
             let sql = 'SELECT * FROM events WHERE id = $1';
@@ -45,6 +46,66 @@ export default class EventRepository {
             const result = await client.query(sql, values);
             return result.rows;
         } finally {
+            client.release();
+        }
+    }
+
+    async getEventLocation(id){
+        const client = await pool.connect();
+        try{
+            let sql = "SELECT * FROM event_locations WHERE id = $1";
+            const values = [id];
+            const result = await client.query(sql, values);
+            return result.rows;
+        } finally{
+            client.release();
+        }
+    }
+
+    async getLocation(id){
+        const client = await pool.connect();
+        try{
+            let sql = "SELECT * FROM locations WHERE id = $1";
+            const values = [id];
+            const result = await client.query(sql, values);
+            return result.rows;
+        } finally{
+            client.release();
+        }
+    }
+
+    async getEventTags(eventId) {
+        const client = await pool.connect();
+        try {
+            let sql = 'SELECT * FROM event_tags WHERE id_event = $1';
+            const values = [eventId];
+            const result = await client.query(sql, values);
+            return result.rows;
+        } finally {
+            client.release();
+        }
+    }
+
+    async getCreatorUser(id){
+        const client = await pool.connect();
+        try{
+            let sql = "SELECT * FROM users WHERE id = $1";
+            const values = [id];
+            const result = await client.query(sql, values);
+            return result.rows;
+        } finally{
+            client.release();
+        }
+    }
+
+    async getEventCategory(id){
+        const client = await pool.connect();
+        try{
+            let sql = "SELECT * FROM event_categories WHERE id = $1";
+            const values = [id];
+            const result = await client.query(sql, values);
+            return result.rows;
+        } finally{
             client.release();
         }
     }
@@ -84,6 +145,6 @@ export default class EventRepository {
             return result.rows;
         } finally {
                 client.release();
-            }
+        }
     }
 }
