@@ -40,7 +40,7 @@ export default class EventRepository {
     async getEventDetails({id}) {
         const client = await pool.connect();
         try {
-            let sql = 'SELECT e.name, e.description, e.start_date, e.duration_in_minutes, e.price, e.enabled_for_enrollment, e.max_assistance, el.full_address as direccion, l.name as localidad, p.name as provincia FROM EVENTS AS e INNER JOIN event_locations as el on el.id = e.id INNER JOIN locations as l on l.id = el.id_location INNER JOIN provinces as p on p.id = l.id_province WHERE e.id = $1;';
+            let sql = 'SELECT * FROM events WHERE id = $1';
             const values = [id];
             const result = await client.query(sql, values);
             return result.rows;

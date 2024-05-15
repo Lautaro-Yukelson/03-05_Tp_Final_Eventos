@@ -15,7 +15,8 @@ export default class EventService {
 
 	async getEventDetails(query) {
 		try {
-			return await this.repo.getEventDetails(query);
+			const response = await this.repo.getEventDetails(query);
+			return response;
 		} catch (error) {
 			throw new Error(
 				'Error al obtener los detalles del evento: ' + error.message,
