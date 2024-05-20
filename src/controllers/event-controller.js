@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
 	try {
-		const returnArray = await svc.getEventDetails(req.params);
+		const returnArray = await svc.getEventDetails(req.params.id);
 		return res.status(200).json(returnArray);
 	} catch (error) {
 		console.error('Error al obtener los detalles del evento:', error);

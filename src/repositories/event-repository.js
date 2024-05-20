@@ -74,10 +74,22 @@ export default class EventRepository {
         }
     }
 
+    async getProvince(id){
+        const client = await pool.connect();
+        try{
+            let sql = "SELECT * FROM provinces WHERE id = $1";
+            const values = [id];
+            const result = await client.query(sql, values);
+            return result.rows;
+        } finally{
+            client.release();
+        }
+    }
+
     async getEventTags(eventId) {
         const client = await pool.connect();
         try {
-            let sql = 'SELECT * FROM event_tags WHERE id_event = $1';
+            let sql = 'select t.id, t.name from event_tags as et inner join tags as t on t.id = et.id_tag WHERE et.id_event = $1;';
             const values = [eventId];
             const result = await client.query(sql, values);
             return result.rows;
