@@ -50,11 +50,12 @@ export default class EventService {
 	}
 	
 
-	async getEnrrollments(query) {
+	async getEnrollments(id, query) { // Cambiar la firma del método
 		try {
-			return await this.repo.getEvents(query);
+			return await this.repo.getEnrollments(id, query); // Llamada al método del repositorio con los parámetros correctos
 		} catch (error) {
-			throw new Error('Error al obtener los eventos: ' + error.message);
+			throw new Error('Error al obtener los registros: ' + error.message);
 		}
 	}
+	
 }

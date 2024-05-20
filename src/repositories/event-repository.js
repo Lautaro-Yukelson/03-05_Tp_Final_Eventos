@@ -122,7 +122,7 @@ export default class EventRepository {
         }
     }
 
-    async getEnrollments({ name, category, startdate, tag }) {
+    async getEnrollments(id, {first_name, last_name, username, attended, rating}) {
         const client = await pool.connect();
         try {
             let sql = 'SELECT u.first_name, u.last_name, u.username, ee.attended, ee.rating FROM users AS u INNER JOIN event_enrollments AS ee ON ee.id_user = u.id ';
@@ -131,27 +131,29 @@ export default class EventRepository {
             if (first_name != undefined) {
                 sql += ` AND u.first_name = $${cont}`;
                 cont++;
-                values.push(name);
+                values.push(first_name);
             }
             if (last_name != undefined) {
                 sql += ` AND u.last_name = $${cont}`;
                 cont++;
-                values.push(category);
+                values.push(last_name);
             }
             if (username != undefined) {
                 sql += ` AND u.username = $${cont}`;
                 cont++;
-                values.push(startdate);
-            } //RETOMAR ACA IAO
+                values.push(username);
+            }
             if (attended != undefined) {
-                sql += ` AND e.id IN (SELECT id_event FROM event_tags WHERE id_tag = (SELECT id FROM tags WHERE name = $${cont}))`;
+                //sql += ` WHERE u.id IN (SELECT id_user FROM event_enrollments WHERE attended = $${cont})`;
+                sql += ` AND ee.attended = $${cont}`;
                 cont++;
-                values.push(tag);
+                values.push(attended);
             }
             if (rating != undefined) {
-                sql += ` AND e.id IN (SELECT id_event FROM event_tags WHERE id_tag = (SELECT id FROM tags WHERE name = $${cont}))`;
+                //sql += ` WHERE u.id IN (SELECT id_user FROM event_enrollments WHERE rating >= $${cont})`;
+                sql += ` AND ee.rating >= $${cont}`;
                 cont++;
-                values.push(tag);
+                values.push(rating);
             }
             const result = await client.query(sql, values);
             return result.rows;

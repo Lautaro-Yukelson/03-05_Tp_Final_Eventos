@@ -24,4 +24,14 @@ router.get('/:id', async (req, res) => {
 	}
 });
 
+router.get('/:id/enrollment', async (req, res) => {
+	try {
+		const returnArray = await svc.getEnrollments(req.params.id, req.query);
+		return res.status(200).json(returnArray);
+	} catch (error) {
+		console.error('Error al obtener los registros:', error);
+		return res.status(500).send('Error al obtener los registros');
+	}
+});
+
 export default router;
