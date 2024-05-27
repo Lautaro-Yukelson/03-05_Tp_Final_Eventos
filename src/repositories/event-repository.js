@@ -1,11 +1,11 @@
 import config from '../configs/db-config.js';
 import pkg from 'pg';
 
-const {Pool} = pkg;
+const { Pool } = pkg;
 const pool = new Pool(config);
 
 export default class EventRepository {
-	async getEvents({name, category, startdate, tag}) {
+	async getEvents({ name, category, startdate, tag }) {
 		const client = await pool.connect();
 		try {
 			let sql =
@@ -125,7 +125,10 @@ export default class EventRepository {
 		}
 	}
 
-	async getEnrollments(id, {first_name, last_name, username, attended, rating}) {
+	async getEnrollments(
+		id,
+		{ first_name, last_name, username, attended, rating },
+	) {
 		const client = await pool.connect();
 		try {
 			let sql =

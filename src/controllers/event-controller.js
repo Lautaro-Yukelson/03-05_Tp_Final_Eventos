@@ -1,4 +1,4 @@
-import {Router} from 'express';
+import { Router } from 'express';
 import EventService from '../services/event-service.js';
 
 const router = Router();
@@ -10,7 +10,9 @@ router.get('/', async (req, res) => {
 		return res.status(status).json(response);
 	} catch (error) {
 		console.error('Controller error - get("/") : ', error);
-		return res.status(500).send({success: false, message: 'Controller error - get("/")'});
+		return res
+			.status(500)
+			.send({ success: false, message: 'Controller error - get("/")' });
 	}
 });
 
@@ -20,7 +22,9 @@ router.get('/:id', async (req, res) => {
 		return res.status(status).json(response);
 	} catch (error) {
 		console.error('Controller error - get("/:id") : ', error);
-		return res.status(500).send({success: false, message: 'Controller error - get("/:id")'});
+		return res
+			.status(500)
+			.send({ success: false, message: 'Controller error - get("/:id")' });
 	}
 });
 
@@ -30,7 +34,10 @@ router.get('/:id/enrollment', async (req, res) => {
 		return res.status(status).json(response);
 	} catch (error) {
 		console.error('Controller error - get("/:id/enrollment") : ', error);
-		return res.status(500).send({success: false, message: 'Controller error - get("/:id/enrollment")'});
+		return res.status(500).send({
+			success: false,
+			message: 'Controller error - get("/:id/enrollment")',
+		});
 	}
 });
 

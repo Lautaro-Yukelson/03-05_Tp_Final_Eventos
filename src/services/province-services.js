@@ -7,56 +7,100 @@ export default class ProvinceService {
 
 	async getProvinces() {
 		try {
-			return await this.repo.getProvinces();
+			const response = await this.repo.getProvinces();
+			return response.length > 0
+				? [{ success: true, response }, 200]
+				: [{ success: false, message: 'No hay provincias para mostrar' }, 404];
 		} catch (error) {
-			throw new Error('Error al obtener las provincias: ' + error.message);
+			throw new Error(`Service error - getProvinces() : ${error.message}`);
 		}
 	}
 
 	async getProvinceById(id) {
 		try {
-			let res = await this.repo.getProvinceById(id);
-			if (res < 1) {
-				return 'La provincia solicitada no existe';
-			} else {
-				return res;
-			}
+			const response = await this.repo.getProvinceById(id);
+			return response.length > 0
+				? [{ success: true, response }, 200]
+				: [{ success: false, message: 'No existe una provincia con ese ID' }, 404];
 		} catch (error) {
-			throw new Error('Error al obtener la provincia por ID: ' + error.message);
+			throw new Error(`Service error - getProvinceById() : ${error.message}`);
 		}
 	}
 
-	async addProvince({name, full_name, latitude, longitude, display_order}) {
+	async addProvince({ name, full_name, latitude, longitude, display_order }) {
 		if (!name || name.length < 3) {
-			throw new Error('El nombre de la provincia debe tener al menos 3 letras.');
+			return [
+				{
+					success: false,
+					message: 'El nombre de la provincia tiene que tener 3 o más letras',
+				},
+				400,
+			];
 		}
-
 		try {
-			return await this.repo.addProvince({
+			await this.repo.addProvince({
 				name,
 				full_name,
 				latitude,
 				longitude,
 				display_order,
 			});
+			return [{ success: true, message: 'Provincia agregada correctamente' }, 201];
 		} catch (error) {
-			throw new Error('Error al agregar la provincia: ' + error.message);
+			throw new Error(`Service error - addProvince() : ${error.message}`);
 		}
 	}
 
-	async updateProvince(provinceData) {
+	async updateProvince(id, data) {
+		if (data.name.length < 3) {
+			return [
+				{
+					success: false,
+					message: 'El nombre de la provincia tiene que tener 3 o más letras',
+				},
+				400,
+			];
+		}
+		if (isNaN(data.latitude) || isNaN(data.longitude)) {
+			return [
+				{
+					success: false,
+					message: 'Los campos latitud y longitud tienen que ser números',
+				},
+				400,
+			];
+		}
 		try {
-			return await this.repo.updateProvince(provinceData);
+			const [province] = await this.getProvinceById(id);
+			if (!province.success) {
+				return [
+					{ success: false, message: 'No existe una provincia con ese ID' },
+					404,
+				];
+			}
+			await this.repo.updateProvince(id, data);
+			return [{ success: true, message: 'Provincia editada correctamente' }, 200];
 		} catch (error) {
-			throw new Error('Error al actualizar la provincia: ' + error.message);
+			throw new Error(`Service error - updateProvince() : ${error.message}`);
 		}
 	}
 
 	async deleteProvince(id) {
 		try {
-			return await this.repo.deleteProvince(id);
+			const [province] = await this.getProvinceById(id);
+			if (!province.success) {
+				return [
+					{ success: false, message: 'No existe una provincia con ese ID' },
+					404,
+				];
+			}
+			await this.repo.deleteProvince(id);
+			return [
+				{ success: true, message: 'Provincia eliminada correctamente' },
+				200,
+			];
 		} catch (error) {
-			throw new Error('Error al eliminar la provincia: ' + error.message);
+			throw new Error(`Service error - deleteProvince() : ${error.message}`);
 		}
 	}
 }

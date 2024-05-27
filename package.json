@@ -2,13 +2,12 @@
   "name": "03-05_tp_final_eventos",
   "version": "1.0.0",
   "type": "module",
-  "description": "",
+  "description": "Yukelson - Steimberg - TP Final Eventos - DAI",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js"
   },
-  "author": "",
+  "author": "Lautaro Yukelson & Iair Steimberg",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",

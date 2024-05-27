@@ -1,17 +1,17 @@
 import config from '../configs/db-config.js';
 import pkg from 'pg';
 
-const {Pool} = pkg;
+const { Pool } = pkg;
 const pool = new Pool(config);
 
 export default class UserRepository {
-	async getUser(username){
+	async getUser(username) {
 		const client = await pool.connect();
-		try{
-			let sql = "SELECT * FROM Users WHERE username = $1";
+		try {
+			let sql = 'SELECT * FROM Users WHERE username = $1';
 			const result = await client.query(sql, [username]);
 			return result.rows;
-		} finally{
+		} finally {
 			client.release();
 		}
 	}
