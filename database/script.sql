@@ -62,7 +62,7 @@ CREATE TABLE public.event_locations (
     id integer NOT NULL,
     id_location integer NOT NULL,
     name character varying(255) NOT NULL,
-    full_adress character varying(255) NOT NULL,
+    full_address character varying(255) NOT NULL,
     max_capacity integer NOT NULL,
     latitude numeric NOT NULL,
     longitude numeric NOT NULL,
@@ -206,10 +206,10 @@ INSERT INTO public.event_enrollments (id, id_event, id_user, description, regist
 INSERT INTO public.event_enrollments (id, id_event, id_user, description, registration_date_time, attended, observations, rating) OVERRIDING SYSTEM VALUE VALUES (3, 3, 3, 'Interesado en salud', '2024-06-10 12:00:00', false, 'No pude asistir', 3);
 INSERT INTO public.event_enrollments (id, id_event, id_user, description, registration_date_time, attended, observations, rating) OVERRIDING SYSTEM VALUE VALUES (4, 4, 4, 'Interesado en finanzas', '2024-06-15 13:00:00', true, 'Muy útil', 5);
 
-INSERT INTO public.event_locations (id, id_location, name, full_adress, max_capacity, latitude, longitude, id_creator_user) OVERRIDING SYSTEM VALUE VALUES (1, 1, 'Centro de Convenciones', 'Calle Falsa 123', 500, -34.6037, -58.3816, 1);
-INSERT INTO public.event_locations (id, id_location, name, full_adress, max_capacity, latitude, longitude, id_creator_user) OVERRIDING SYSTEM VALUE VALUES (2, 2, 'Sala de Conferencias', 'Calle Real 456', 200, -34.6118, -58.4173, 2);
-INSERT INTO public.event_locations (id, id_location, name, full_adress, max_capacity, latitude, longitude, id_creator_user) OVERRIDING SYSTEM VALUE VALUES (3, 3, 'Auditorio Central', 'Av. Siempreviva 789', 300, -34.6090, -58.3900, 3);
-INSERT INTO public.event_locations (id, id_location, name, full_adress, max_capacity, latitude, longitude, id_creator_user) OVERRIDING SYSTEM VALUE VALUES (4, 4, 'Espacio Cultural', 'Boulevard Ficticio 1011', 100, -34.6158, -58.4333, 4);
+INSERT INTO public.event_locations (id, id_location, name, full_address, max_capacity, latitude, longitude, id_creator_user) OVERRIDING SYSTEM VALUE VALUES (1, 1, 'Centro de Convenciones', 'Calle Falsa 123', 500, -34.6037, -58.3816, 1);
+INSERT INTO public.event_locations (id, id_location, name, full_address, max_capacity, latitude, longitude, id_creator_user) OVERRIDING SYSTEM VALUE VALUES (2, 2, 'Sala de Conferencias', 'Calle Real 456', 200, -34.6118, -58.4173, 2);
+INSERT INTO public.event_locations (id, id_location, name, full_address, max_capacity, latitude, longitude, id_creator_user) OVERRIDING SYSTEM VALUE VALUES (3, 3, 'Auditorio Central', 'Av. Siempreviva 789', 300, -34.6090, -58.3900, 3);
+INSERT INTO public.event_locations (id, id_location, name, full_address, max_capacity, latitude, longitude, id_creator_user) OVERRIDING SYSTEM VALUE VALUES (4, 4, 'Espacio Cultural', 'Boulevard Ficticio 1011', 100, -34.6158, -58.4333, 4);
 
 INSERT INTO public.event_tags (id, id_event, id_tag) OVERRIDING SYSTEM VALUE VALUES (1, 1, 1);
 INSERT INTO public.event_tags (id, id_event, id_tag) OVERRIDING SYSTEM VALUE VALUES (2, 1, 3);

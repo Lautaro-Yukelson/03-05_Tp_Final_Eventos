@@ -34,7 +34,7 @@ INSERT INTO public.tags (name) VALUES
 ('Finanzas');
 
 -- Tabla: event_locations
-INSERT INTO public.event_locations (id_location, name, full_adress, max_capacity, latitude, longitude, id_creator_user) VALUES 
+INSERT INTO public.event_locations (id_location, name, full_address, max_capacity, latitude, longitude, id_creator_user) VALUES 
 (1, 'Centro de Convenciones', 'Calle Falsa 123', 500, -34.6037, -58.3816, 1),
 (2, 'Sala de Conferencias', 'Calle Real 456', 200, -34.6118, -58.4173, 2),
 (3, 'Auditorio Central', 'Av. Siempreviva 789', 300, -34.6090, -58.3900, 3),
@@ -59,5 +59,5 @@ INSERT INTO public.event_tags (id_event, id_tag) VALUES
 INSERT INTO public.event_enrollments (id_event, id_user, description, registration_date_time, attended, observations, rating) VALUES 
 (1, 1, 'Interesado en nuevas tecnologías', '2024-06-01 10:00:00', TRUE, 'Muy informativo', 5),
 (2, 2, 'Quiero aprender a programar', '2024-06-05 11:00:00', TRUE, 'Excelente taller', 4),
-(3, 3, 'Interesado en salud', '2024-06-10 12:00:00', FALSE, 'No pude asistir', NULL),
+(3, 3, 'Interesado en salud', '2024-06-10 12:00:00', FALSE, 'No pude asistir', 3),
 (4, 4, 'Interesado en finanzas', '2024-06-15 13:00:00', TRUE, 'Muy útil', 5);

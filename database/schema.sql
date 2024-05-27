@@ -52,7 +52,7 @@ CREATE TABLE public.event_locations (
     id integer NOT NULL,
     id_location integer NOT NULL,
     name character varying(255) NOT NULL,
-    full_adress character varying(255) NOT NULL,
+    full_address character varying(255) NOT NULL,
     max_capacity integer NOT NULL,
     latitude numeric NOT NULL,
     longitude numeric NOT NULL,
