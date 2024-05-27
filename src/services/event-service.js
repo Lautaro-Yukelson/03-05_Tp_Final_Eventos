@@ -8,27 +8,28 @@ export default class EventService {
 
 	async getEvents(query) {
 		try {
-			return await this.repo.getEvents(query);
+			const response = await this.repo.getEvents(query);
+			return response.length > 0 ? [{success: true, response: response}, 200] : [{success: false, message: 'No hay eventos para mostrar'}, 404];
 		} catch (error) {
-			throw new Error('Error al obtener los eventos: ' + error.message);
+			throw new Error('Service error - getEvents(): \n' + error);
 		}
 	}
 
 	async getEventDetails(id) {
 		try {
-			return await this.repo.getEventDetails(id);
+			const response = await this.repo.getEventDetails(id);
+			return response.length > 0 ? [{success: true, response: response}, 200] : [{success: false, message: 'No existe un evento con ese ID'}, 404];
 		} catch (error) {
-			throw new Error(
-				'Error al obtener los detalles del evento: ' + error.message,
-			);
+			throw new Error('Service error - getEventsDetailes(id): \n' + error);
 		}
 	}
 
 	async getEnrollments(id, query) {
 		try {
-			return await this.repo.getEnrollments(id, query);
+			const response =  this.repo.getEnrollments(id, query);
+			return response.length > 0 ? [{success: true, response: response}, 200] : [{success: false, message: 'No hay enrollments para ese evento'}, 404];
 		} catch (error) {
-			throw new Error('Error al obtener los registros: ' + error.message);
+			throw new Error('Service error - getEnrollments(id, query): \n' + error);
 		}
 	}
 }

@@ -96,7 +96,7 @@ CREATE TABLE public.events (
     start_date timestamp without time zone NOT NULL,
     duration_in_minutes integer NOT NULL,
     price double precision NOT NULL,
-    enables_for_enrollment boolean NOT NULL,
+    enabled_for_enrollment boolean NOT NULL,
     max_assistance integer NOT NULL,
     id_creator_user integer NOT NULL
 );

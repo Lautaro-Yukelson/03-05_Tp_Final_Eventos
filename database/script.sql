@@ -106,7 +106,7 @@ CREATE TABLE public.events (
     start_date timestamp without time zone NOT NULL,
     duration_in_minutes integer NOT NULL,
     price double precision NOT NULL,
-    enables_for_enrollment boolean NOT NULL,
+    enabled_for_enrollment boolean NOT NULL,
     max_assistance integer NOT NULL,
     id_creator_user integer NOT NULL
 );
@@ -217,10 +217,10 @@ INSERT INTO public.event_tags (id, id_event, id_tag) OVERRIDING SYSTEM VALUE VAL
 INSERT INTO public.event_tags (id, id_event, id_tag) OVERRIDING SYSTEM VALUE VALUES (4, 3, 2);
 INSERT INTO public.event_tags (id, id_event, id_tag) OVERRIDING SYSTEM VALUE VALUES (5, 4, 4);
 
-INSERT INTO public.events (id, name, description, id_event_category, id_event_location, start_date, duration_in_minutes, price, enables_for_enrollment, max_assistance, id_creator_user) OVERRIDING SYSTEM VALUE VALUES (1, 'Conferencia de Tecnología', 'Una conferencia sobre los últimos avances en tecnología.', 1, 1, '2024-06-01 10:00:00', 90, 50.0, true, 100, 1);
-INSERT INTO public.events (id, name, description, id_event_category, id_event_location, start_date, duration_in_minutes, price, enables_for_enrollment, max_assistance, id_creator_user) OVERRIDING SYSTEM VALUE VALUES (2, 'Taller de Programación', 'Un taller práctico para aprender a programar.', 2, 2, '2024-06-05 11:00:00', 120, 30.0, true, 50, 2);
-INSERT INTO public.events (id, name, description, id_event_category, id_event_location, start_date, duration_in_minutes, price, enables_for_enrollment, max_assistance, id_creator_user) OVERRIDING SYSTEM VALUE VALUES (3, 'Seminario de Salud', 'Un seminario sobre la importancia de la salud.', 3, 3, '2024-06-10 12:00:00', 60, 20.0, true, 75, 3);
-INSERT INTO public.events (id, name, description, id_event_category, id_event_location, start_date, duration_in_minutes, price, enables_for_enrollment, max_assistance, id_creator_user) OVERRIDING SYSTEM VALUE VALUES (4, 'Webinar de Finanzas', 'Un webinar sobre la gestión de finanzas personales.', 4, 4, '2024-06-15 13:00:00', 45, 0.0, true, 150, 4);
+INSERT INTO public.events (id, name, description, id_event_category, id_event_location, start_date, duration_in_minutes, price, enabled_for_enrollment, max_assistance, id_creator_user) OVERRIDING SYSTEM VALUE VALUES (1, 'Conferencia de Tecnología', 'Una conferencia sobre los últimos avances en tecnología.', 1, 1, '2024-06-01 10:00:00', 90, 50.0, true, 100, 1);
+INSERT INTO public.events (id, name, description, id_event_category, id_event_location, start_date, duration_in_minutes, price, enabled_for_enrollment, max_assistance, id_creator_user) OVERRIDING SYSTEM VALUE VALUES (2, 'Taller de Programación', 'Un taller práctico para aprender a programar.', 2, 2, '2024-06-05 11:00:00', 120, 30.0, true, 50, 2);
+INSERT INTO public.events (id, name, description, id_event_category, id_event_location, start_date, duration_in_minutes, price, enabled_for_enrollment, max_assistance, id_creator_user) OVERRIDING SYSTEM VALUE VALUES (3, 'Seminario de Salud', 'Un seminario sobre la importancia de la salud.', 3, 3, '2024-06-10 12:00:00', 60, 20.0, true, 75, 3);
+INSERT INTO public.events (id, name, description, id_event_category, id_event_location, start_date, duration_in_minutes, price, enabled_for_enrollment, max_assistance, id_creator_user) OVERRIDING SYSTEM VALUE VALUES (4, 'Webinar de Finanzas', 'Un webinar sobre la gestión de finanzas personales.', 4, 4, '2024-06-15 13:00:00', 45, 0.0, true, 150, 4);
 
 INSERT INTO public.locations (id, name, id_province, latitude, longitude) OVERRIDING SYSTEM VALUE VALUES (1, 'Buenos Aires', 1, -34.6037, -58.3816);
 INSERT INTO public.locations (id, name, id_province, latitude, longitude) OVERRIDING SYSTEM VALUE VALUES (2, 'Córdoba', 2, -31.4201, -64.1888);

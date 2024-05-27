@@ -41,7 +41,7 @@ INSERT INTO public.event_locations (id_location, name, full_address, max_capacit
 (4, 'Espacio Cultural', 'Boulevard Ficticio 1011', 100, -34.6158, -58.4333, 4);
 
 -- Tabla: events
-INSERT INTO public.events (name, description, id_event_category, id_event_location, start_date, duration_in_minutes, price, enables_for_enrollment, max_assistance, id_creator_user) VALUES 
+INSERT INTO public.events (name, description, id_event_category, id_event_location, start_date, duration_in_minutes, price, enabled_for_enrollment, max_assistance, id_creator_user) VALUES 
 ('Conferencia Tech 2024', 'Una conferencia sobre las últimas tecnologías.', 1, 1, '2024-06-15 09:00:00', 120, 50.0, TRUE, 100, 1),
 ('Taller de Programación', 'Aprende a programar en Python.', 2, 2, '2024-06-20 14:00:00', 180, 30.0, TRUE, 50, 2),
 ('Seminario de Salud', 'Discusión sobre las tendencias en salud.', 3, 3, '2024-06-25 10:00:00', 90, 20.0, TRUE, 75, 3),

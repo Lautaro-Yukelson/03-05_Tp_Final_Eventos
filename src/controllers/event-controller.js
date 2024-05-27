@@ -6,31 +6,31 @@ const svc = new EventService();
 
 router.get('/', async (req, res) => {
 	try {
-		const returnArray = await svc.getEvents(req.query);
-		return res.status(200).json(returnArray);
+		const [response, status] = await svc.getEvents(req.query);
+		return res.status(status).json(response);
 	} catch (error) {
-		console.error('Error al obtener los eventos:', error);
-		return res.status(500).send('Error al obtener los eventos');
+		console.error('Controller error - get("/") : ', error);
+		return res.status(500).send({success: false, message: 'Controller error - get("/")'});
 	}
 });
 
 router.get('/:id', async (req, res) => {
 	try {
-		const returnArray = await svc.getEventDetails(req.params.id);
-		return res.status(200).json(returnArray);
+		const [response, status] = await svc.getEventDetails(req.params.id);
+		return res.status(status).json(response);
 	} catch (error) {
-		console.error('Error al obtener los detalles del evento:', error);
-		return res.status(500).send('Error al obtener los eventos');
+		console.error('Controller error - get("/:id") : ', error);
+		return res.status(500).send({success: false, message: 'Controller error - get("/:id")'});
 	}
 });
 
 router.get('/:id/enrollment', async (req, res) => {
 	try {
-		const returnArray = await svc.getEnrollments(req.params.id, req.query);
-		return res.status(200).json(returnArray);
+		const [response, status] = await svc.getEnrollments(req.params.id, req.query);
+		return res.status(status).json(response);
 	} catch (error) {
-		console.error('Error al obtener los registros:', error);
-		return res.status(500).send('Error al obtener los registros');
+		console.error('Controller error - get("/:id/enrollment") : ', error);
+		return res.status(500).send({success: false, message: 'Controller error - get("/:id/enrollment")'});
 	}
 });
 
