@@ -7,10 +7,10 @@ INSERT INTO public.event_categories (name, display_order) VALUES
 
 -- Tabla: users
 INSERT INTO public.users (first_name, last_name, username, password) VALUES 
-('Juan', 'Perez', 'jperez', 'password1'),
-('Ana', 'Lopez', 'alopez', 'password2'),
-('Luis', 'Gomez', 'lgomez', 'password3'),
-('Maria', 'Martinez', 'mmartinez', 'password4');
+('Juan', 'Perez', 'jperez@gmail.com', 'password1'),
+('Ana', 'Lopez', 'alopez@gmail.com', 'password2'),
+('Luis', 'Gomez', 'lgomez@gmail.com', 'password3'),
+('Maria', 'Martinez', 'mmartinez@gmail.com', 'password4');
 
 -- Tabla: provinces
 INSERT INTO public.provinces (name, full_name, latitude, longitude, display_order) VALUES 

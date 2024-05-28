@@ -32,14 +32,13 @@ export default class ProvinceRepository {
 		try {
 			const sql =
 				'INSERT INTO provinces (name, full_name, latitude, longitude, display_order) VALUES ($1, $2, $3, $4, $5)';
-			const result = await client.query(sql, [
+			await client.query(sql, [
 				name,
 				full_name,
 				latitude,
 				longitude,
 				display_order,
 			]);
-			return result.rows;
 		} finally {
 			client.release();
 		}

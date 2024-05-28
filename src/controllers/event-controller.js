@@ -4,41 +4,32 @@ import EventService from '../services/event-service.js';
 const router = Router();
 const svc = new EventService();
 
-router.get('/', async (req, res) => {
+const handleRequest = (serviceMethod) => async (req, res) => {
 	try {
-		const [response, status] = await svc.getEvents(req.query);
+		const [response, status] = await serviceMethod(req);
 		return res.status(status).json(response);
 	} catch (error) {
-		console.error('Controller error - get("/") : ', error);
-		return res
-			.status(500)
-			.send({ success: false, message: 'Controller error - get("/")' });
-	}
-});
-
-router.get('/:id', async (req, res) => {
-	try {
-		const [response, status] = await svc.getEventDetails(req.params.id);
-		return res.status(status).json(response);
-	} catch (error) {
-		console.error('Controller error - get("/:id") : ', error);
-		return res
-			.status(500)
-			.send({ success: false, message: 'Controller error - get("/:id")' });
-	}
-});
-
-router.get('/:id/enrollment', async (req, res) => {
-	try {
-		const [response, status] = await svc.getEnrollments(req.params.id, req.query);
-		return res.status(status).json(response);
-	} catch (error) {
-		console.error('Controller error - get("/:id/enrollment") : ', error);
+		console.error(`Controller error - ${req.method} ${req.path} : `, error);
 		return res.status(500).send({
 			success: false,
-			message: 'Controller error - get("/:id/enrollment")',
+			message: `Controller error - ${req.method} ${req.path}`,
 		});
 	}
-});
+};
+
+router.get(
+	'/',
+	handleRequest((req) => svc.getEvents(req.query)),
+);
+
+router.get(
+	'/:id',
+	handleRequest((req) => svc.getEventDetails(req.params.id)),
+);
+
+router.get(
+	'/:id/enrollment',
+	handleRequest((req) => svc.getEnrollments(req.params.id, req.query)),
+);
 
 export default router;

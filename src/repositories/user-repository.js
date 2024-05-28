@@ -26,4 +26,15 @@ export default class UserRepository {
 			client.release();
 		}
 	}
+
+	async addUser({ first_name, last_name, username, password }) {
+		const client = await pool.connect();
+		try {
+			let sql =
+				'INSERT INTO Users (first_name, last_name, username, password) VALUES ($1, $2, $3, $4)';
+			await client.query(sql, [first_name, last_name, username, password]);
+		} finally {
+			client.release();
+		}
+	}
 }

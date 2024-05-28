@@ -237,10 +237,10 @@ INSERT INTO public.tags (id, name) OVERRIDING SYSTEM VALUE VALUES (2, 'Salud');
 INSERT INTO public.tags (id, name) OVERRIDING SYSTEM VALUE VALUES (3, 'Innovación');
 INSERT INTO public.tags (id, name) OVERRIDING SYSTEM VALUE VALUES (4, 'Finanzas');
 
-INSERT INTO public.users (id, first_name, last_name, username, password) OVERRIDING SYSTEM VALUE VALUES (1, 'Juan', 'Pérez', 'juanp', 'password123');
-INSERT INTO public.users (id, first_name, last_name, username, password) OVERRIDING SYSTEM VALUE VALUES (2, 'María', 'García', 'mariag', 'password123');
-INSERT INTO public.users (id, first_name, last_name, username, password) OVERRIDING SYSTEM VALUE VALUES (3, 'Carlos', 'López', 'carlosl', 'password123');
-INSERT INTO public.users (id, first_name, last_name, username, password) OVERRIDING SYSTEM VALUE VALUES (4, 'Ana', 'Martínez', 'anam', 'password123');
+INSERT INTO public.users (id, first_name, last_name, username, password) OVERRIDING SYSTEM VALUE VALUES (1, 'Juan', 'Pérez', 'juanp@gmail.com', 'password123');
+INSERT INTO public.users (id, first_name, last_name, username, password) OVERRIDING SYSTEM VALUE VALUES (2, 'María', 'García', 'mariag@gmail.com', 'password123');
+INSERT INTO public.users (id, first_name, last_name, username, password) OVERRIDING SYSTEM VALUE VALUES (3, 'Carlos', 'López', 'carlosl@gmail.com', 'password123');
+INSERT INTO public.users (id, first_name, last_name, username, password) OVERRIDING SYSTEM VALUE VALUES (4, 'Ana', 'Martínez', 'anam@gmail.com', 'password123');
 
 ALTER TABLE ONLY public.event_enrollments
     ADD CONSTRAINT event_enrollments_pkey PRIMARY KEY (id);
