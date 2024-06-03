@@ -168,4 +168,29 @@ export default class EventRepository {
 			client.release();
 		}
 	}
+
+	async addEvent(event) {
+		const client = await pool.connect();
+		try {
+			let sql =
+				'INSERT INTO public.events(name, description, id_event_category, id_event_location, start_date, duration_in_minutes, price, enabled_for_enrollment, max_assistance, id_creator_user, max_capacity)  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11);';
+			const values = [
+				event.name,
+				event.description,
+				event.id_event_category,
+				event.id_event_location,
+				event.start_date,
+				event.duration_in_minutes,
+				event.price,
+				event.enabled_for_enrollment,
+				event.max_assitance,
+				event.max_capacity,
+				event.user.id,
+			];
+			const result = await client.query(sql, values);
+			return result.rows;
+		} finally {
+			client.release();
+		}
+	}
 }

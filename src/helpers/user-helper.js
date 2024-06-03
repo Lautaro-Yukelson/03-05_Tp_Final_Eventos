@@ -34,13 +34,3 @@ export function generateToken(user) {
 	const options = { expiresIn: '1h', issuer: 'eventsManagement' };
 	return jwt.sign(user, secretKey, options);
 }
-
-export async function undoToken(token) {
-	const secretKey = process.env.SECRETKEYJWT;
-	try {
-		return await jwt.verify(token, secretKey);
-	} catch (error) {
-		console.error(error);
-		return 'Error en la conversion';
-	}
-}

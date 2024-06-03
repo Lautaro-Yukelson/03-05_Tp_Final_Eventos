@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import EventService from '../services/event-service.js';
+import authMiddleware from '../middlewares/auth-middleware.js';
 
 const router = Router();
 const svc = new EventService();
@@ -30,6 +31,12 @@ router.get(
 router.get(
 	'/:id/enrollment',
 	handleRequest((req) => svc.getEnrollments(req.params.id, req.query)),
+);
+
+router.post(
+	'/',
+	authMiddleware,
+	handleRequest((req) => svc.addEvent(req)),
 );
 
 export default router;

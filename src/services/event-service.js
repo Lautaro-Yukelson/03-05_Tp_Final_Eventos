@@ -38,4 +38,12 @@ export default class EventService {
 			throw new Error('Service error - getEnrollments(id, query): \n' + error);
 		}
 	}
+
+	async addEvent({ body }) {
+		try {
+			await this.repo.addEvent(body);
+		} catch (error) {
+			throw new Error('Service error - addEvent({body}): \n' + error);
+		}
+	}
 }
