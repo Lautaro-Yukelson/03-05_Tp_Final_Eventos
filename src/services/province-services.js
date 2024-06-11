@@ -73,10 +73,7 @@ export default class ProvinceService {
 		try {
 			const [province] = await this.getProvinceById(id);
 			if (!province.success) {
-				return [
-					{ success: false, message: 'No existe una provincia con ese ID' },
-					404,
-				];
+				return [{ success: false, message: 'No existe una provincia con ese ID' }, 404];
 			}
 			await this.repo.updateProvince(id, data);
 			return [{ success: true, message: 'Provincia editada correctamente' }, 200];
@@ -89,16 +86,10 @@ export default class ProvinceService {
 		try {
 			const [province] = await this.getProvinceById(id);
 			if (!province.success) {
-				return [
-					{ success: false, message: 'No existe una provincia con ese ID' },
-					404,
-				];
+				return [{ success: false, message: 'No existe una provincia con ese ID' }, 404];
 			}
 			await this.repo.deleteProvince(id);
-			return [
-				{ success: true, message: 'Provincia eliminada correctamente' },
-				200,
-			];
+			return [{ success: true, message: 'Provincia eliminada correctamente' }, 200];
 		} catch (error) {
 			throw new Error(`Service error - deleteProvince() : ${error.message}`);
 		}

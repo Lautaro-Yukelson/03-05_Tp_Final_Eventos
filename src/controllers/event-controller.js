@@ -6,49 +6,49 @@ const router = Router();
 const svc = new EventService();
 
 const handleRequest = (serviceMethod) => async (req, res) => {
-  try {
-    const [response, status] = await serviceMethod(req);
-    return res.status(status).json(response);
-  } catch (error) {
-    console.error(`Controller error - ${req.method} ${req.path} : `, error);
-    return res.status(500).send({
-      success: false,
-      message: `Controller error - ${req.method} ${req.path}`,
-    });
-  }
+	try {
+		const [response, status] = await serviceMethod(req);
+		return res.status(status).json(response);
+	} catch (error) {
+		console.error(`Controller error - ${req.method} ${req.path} : `, error);
+		return res.status(500).send({
+			success: false,
+			message: `Controller error - ${req.method} ${req.path}`,
+		});
+	}
 };
 
 router.get(
-  '/',
-  handleRequest((req) => svc.getEvents(req.query))
+	'/',
+	handleRequest((req) => svc.getEvents(req.query)),
 );
 
 router.get(
-  '/:id',
-  handleRequest((req) => svc.getEventDetails(req.params.id))
+	'/:id',
+	handleRequest((req) => svc.getEventDetails(req.params.id)),
 );
 
 router.get(
-  '/:id/enrollment',
-  handleRequest((req) => svc.getEnrollments(req.params.id, req.query))
+	'/:id/enrollment',
+	handleRequest((req) => svc.getEnrollments(req.params.id, req.query)),
 );
 
 router.post(
-  '/',
-  authMiddleware,
-  handleRequest((req) => svc.addEvent(req))
+	'/',
+	authMiddleware,
+	handleRequest((req) => svc.addEvent(req)),
 );
 
 router.put(
-  '/',
-  authMiddleware,
-  handleRequest((req) => svc.updateEvent(req))
+	'/',
+	authMiddleware,
+	handleRequest((req) => svc.updateEvent(req)),
 );
 
 router.delete(
-  '/:id',
-  authMiddleware,
-  handleRequest((req) => svc.deleteEvent(req.params.id, req.body.user))
+	'/:id',
+	authMiddleware,
+	handleRequest((req) => svc.deleteEvent(req.params.id, req.body.user)),
 );
 
 export default router;

@@ -23,16 +23,10 @@ export default class UserService {
 		try {
 			const [user] = await this.repo.getUser(username);
 			if (!user) {
-				return [
-					{ success: false, message: ['Usuario inexistente'], token: '' },
-					401,
-				];
+				return [{ success: false, message: ['Usuario inexistente'], token: '' }, 401];
 			}
 			if (user.password !== password) {
-				return [
-					{ success: false, message: ['Contraseña incorrecta'], token: '' },
-					401,
-				];
+				return [{ success: false, message: ['Contraseña incorrecta'], token: '' }, 401];
 			}
 			const token = generateToken(user);
 			return [
@@ -55,10 +49,7 @@ export default class UserService {
 				return [{ success: false, message: validationMessages }, 400];
 			}
 			await this.repo.addUser(userData);
-			return [
-				{ success: true, message: ['Usuario registrado correctamente'] },
-				201,
-			];
+			return [{ success: true, message: ['Usuario registrado correctamente'] }, 201];
 		} catch (error) {
 			throw new Error(`Service error - register() : ${error.message}`);
 		}
