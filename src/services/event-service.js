@@ -44,14 +44,10 @@ export default class EventService {
 			const {
 				name,
 				description,
-				id_event_category,
 				id_event_location,
-				start_date,
 				duration_in_minutes,
 				price,
-				enabled_for_enrollment,
 				max_assistance,
-				max_capacity,
 			} = body;
 
 			if (name.length < 3 || description.length < 3) {
@@ -64,9 +60,8 @@ export default class EventService {
 				];
 			}
 
-			const eventLocation = await this.repo.getEventLocation(id_event_location);
-			const event_max_capacity = eventLocation[0].max_capacity;
-			if (max_assistance > event_max_capacity) {
+			const [eventLocation] = await this.repo.getEventLocation(id_event_location);
+			if (max_assistance > eventLocation.max_capacity) {
 				return [
 					{
 						success: false,
@@ -86,7 +81,7 @@ export default class EventService {
 				];
 			}
 
-			await this.repo.addEvent(body);
+			await this.repo.addEvent(body, user.id);
 			return [{ success: true, message: 'Evento creado correctamente' }, 201];
 		} catch (error) {
 			throw new Error('Service error - addEvent({body}): \n' + error);
@@ -94,7 +89,6 @@ export default class EventService {
 	}
 
 	async updateEvent({ body }) {
-		console.log(body);
 		try {
 			const [event] = await this.repo.getEventDetails(body.id);
 			if (!event) {
@@ -180,6 +174,133 @@ export default class EventService {
 			return [{ success: true, message: 'Evento eliminado correctamente' }, 200];
 		} catch (error) {
 			throw new Error('Service error - deleteEvent(): \n' + error);
+		}
+	}
+
+	async enrollInEvent(eventId, user) {
+		try {
+			const event = await this.repo.getEventDetails(eventId);
+			if (event.length === 0) {
+				return [{ success: false, message: 'Evento no encontrado' }, 404];
+			}
+
+			const { max_assistance, start_date, enabled_for_enrollment, id_creator_user } =
+				event[0];
+			const currentDate = new Date();
+			const eventDate = new Date(start_date);
+
+			if (!enabled_for_enrollment) {
+				return [
+					{ success: false, message: 'El evento no está habilitado para la inscripción' },
+					400,
+				];
+			}
+
+			if (eventDate <= currentDate) {
+				return [
+					{
+						success: false,
+						message: 'No se puede registrar a un evento que ya sucedió o es hoy',
+					},
+					400,
+				];
+			}
+
+			const enrollments = await this.repo.getEnrollments(eventId, {});
+			if (enrollments.length >= max_assistance) {
+				return [
+					{ success: false, message: 'Capacidad máxima de registrados excedida' },
+					400,
+				];
+			}
+
+			if (enrollments.length > 0) {
+				return [
+					{ success: false, message: 'El usuario ya está registrado en el evento' },
+					400,
+				];
+			}
+
+			await this.repo.addEnrollment(eventId, user.id);
+			return [{ success: true, message: 'Usuario registrado correctamente' }, 201];
+		} catch (error) {
+			throw new Error('Service error - enrollInEvent(): \n' + error);
+		}
+	}
+
+	async removeEnrollment(eventId, user) {
+		try {
+			const event = await this.repo.getEventDetails(eventId);
+			if (event.length === 0) {
+				return [{ success: false, message: 'Evento no encontrado' }, 404];
+			}
+
+			const { start_date } = event[0];
+			const currentDate = new Date();
+			const eventDate = new Date(start_date);
+
+			if (eventDate <= currentDate) {
+				return [
+					{
+						success: false,
+						message:
+							'No se puede remover la inscripción de un evento que ya sucedió o es hoy',
+					},
+					400,
+				];
+			}
+
+			const enrollments = await this.repo.getEnrollments(eventId, {});
+			if (enrollments < 1) {
+				return [
+					{ success: false, message: 'El usuario no está registrado en el evento' },
+					400,
+				];
+			}
+
+			await this.repo.removeEnrollment(eventId, user.id);
+			return [{ success: true, message: 'Usuario removido correctamente' }, 200];
+		} catch (error) {
+			throw new Error('Service error - removeEnrollment(): \n' + error);
+		}
+	}
+
+	async updateEnrollment(eventId, rating, user, observations = '') {
+		try {
+			const event = await this.repo.getEventDetails(eventId);
+			if (event.length === 0) {
+				return [{ success: false, message: 'Evento no encontrado' }, 404];
+			}
+
+			const { start_date } = event[0];
+			const currentDate = new Date();
+			const eventDate = new Date(start_date);
+
+			if (eventDate > currentDate) {
+				return [{ success: false, message: 'El evento no ha finalizado aún' }, 400];
+			}
+
+			if (rating < 1 || rating > 10) {
+				return [{ success: false, message: 'El rating debe estar entre 1 y 10' }, 400];
+			}
+
+			const enrollments = await this.repo.getEnrollments(eventId, {
+				username: user.username,
+			});
+			if (enrollments.length < 1) {
+				return [
+					{ success: false, message: 'El usuario no está registrado en el evento' },
+					400,
+				];
+			}
+
+			await this.repo.updateEnrollment(eventId, user.id, rating, observations);
+			return [
+				{ success: true, message: 'Inscripción actualizada correctamente' },
+				200,
+			];
+		} catch (error) {
+			throw new Error('Service error - updateEnrollment(): \n' + error);
 		}
 	}
 }

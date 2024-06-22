@@ -132,11 +132,19 @@ export default class EventRepository {
 		const client = await pool.connect();
 		try {
 			let sql =
-				'SELECT u.first_name, u.last_name, u.username, ee.attended, ee.rating FROM users AS u INNER JOIN event_enrollments AS ee ON ee.id_user = u.id ';
+				'SELECT ee.id_event, u.first_name, u.last_name, u.username, ee.attended, ee.rating FROM users AS u INNER JOIN event_enrollments AS ee ON ee.id_user = u.id ';
 			const values = [];
 			let whereClause = false;
 
+			if (id) {
+				sql += `WHERE ee.id_event = $1 `;
+				values.push(id);
+				whereClause = true;
+			}
+
 			if (first_name !== undefined) {
+				if (whereClause) sql += 'AND ';
+				else sql += 'WHERE ';
 				sql += `WHERE u.first_name = $1 `;
 				values.push(first_name);
 				whereClause = true;
@@ -193,7 +201,7 @@ export default class EventRepository {
 		}
 	}
 
-	async addEvent(event) {
+	async addEvent(event, user_id) {
 		const client = await pool.connect();
 		try {
 			let sql =
@@ -208,7 +216,7 @@ export default class EventRepository {
 				event.price,
 				event.enabled_for_enrollment,
 				event.max_assistance,
-				event.user.id,
+				user_id,
 				event.max_capacity,
 			];
 
@@ -254,6 +262,44 @@ export default class EventRepository {
 		const client = await pool.connect();
 		try {
 			await client.query('DELETE FROM events WHERE id = $1', [eventId]);
+		} finally {
+			client.release();
+		}
+	}
+
+	async addEnrollment(eventId, userId) {
+		const client = await pool.connect();
+		try {
+			const sql = 'INSERT INTO event_enrollments (id_event, id_user) VALUES ($1, $2)';
+			const values = [eventId, userId];
+			await client.query(sql, values);
+		} finally {
+			client.release();
+		}
+	}
+
+	async removeEnrollment(eventId, userId) {
+		const client = await pool.connect();
+		try {
+			const sql =
+				'DELETE FROM event_enrollments WHERE id_event = $1 AND id_user = $2';
+			const values = [eventId, userId];
+			await client.query(sql, values);
+		} finally {
+			client.release();
+		}
+	}
+
+	async updateEnrollment(eventId, userId, rating, observations) {
+		const client = await pool.connect();
+		try {
+			const sql = `
+				UPDATE event_enrollments 
+				SET rating = $1, observations = $2
+				WHERE id_event = $3 AND id_user = $4
+			`;
+			const values = [rating, observations, eventId, userId];
+			await client.query(sql, values);
 		} finally {
 			client.release();
 		}

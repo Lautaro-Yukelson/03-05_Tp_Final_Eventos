@@ -51,4 +51,29 @@ router.delete(
 	handleRequest((req) => svc.deleteEvent(req.params.id, req.body.user)),
 );
 
+router.post(
+	'/:id/enrollment',
+	authMiddleware,
+	handleRequest((req) => svc.enrollInEvent(req.params.id, req.user)),
+);
+
+router.delete(
+	'/:id/enrollment',
+	authMiddleware,
+	handleRequest((req) => svc.removeEnrollment(req.params.id, req.user)),
+);
+
+router.patch(
+	'/:id/enrollment/:rating',
+	authMiddleware,
+	handleRequest((req) =>
+		svc.updateEnrollment(
+			req.params.id,
+			req.params.rating,
+			req.user,
+			req.body.observations,
+		),
+	),
+);
+
 export default router;
