@@ -70,7 +70,7 @@ router.patch(
 		svc.updateEnrollment(
 			req.params.id,
 			req.params.rating,
-			req.user,
+			req.body.user,
 			req.body.observations,
 		),
 	),

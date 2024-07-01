@@ -9,29 +9,39 @@ export default class EventRepository {
 		const client = await pool.connect();
 		try {
 			let sql =
-				'SELECT e.id, e.name, e.description, e.start_date, e.duration_in_minutes, e.price, e.enabled_for_enrollment, e.max_assistance, ec.name AS category_name, ARRAY_AGG(t.name) AS tag_names FROM events AS e INNER JOIN event_categories AS ec ON e.id_event_category = ec.id LEFT JOIN event_tags AS et on e.id = et.id_event LEFT JOIN tags as t on t.id = et.id_tag GROUP BY e.id, e.name, e.description, e.start_date, e.duration_in_minutes, e.price, e.enabled_for_enrollment, e.max_assistance, ec.name;';
+				'SELECT e.id, e.name, e.description, e.start_date, e.duration_in_minutes, e.price, e.enabled_for_enrollment, e.max_assistance, ec.name AS category_name, ARRAY_AGG(t.name) AS tag_names FROM events AS e INNER JOIN event_categories AS ec ON e.id_event_category = ec.id LEFT JOIN event_tags AS et on e.id = et.id_event LEFT JOIN tags as t on t.id = et.id_tag';
+
+			const params = [];
 			const values = [];
 			let cont = 1;
-			if (name != undefined) {
-				sql += ` AND e.name = $${cont}`;
-				cont++;
+
+			if (name) {
+				params.push(`e.id = $${cont}`);
 				values.push(name);
-			}
-			if (category != undefined) {
-				sql += ` AND ec.name = $${cont}`;
 				cont++;
+			}
+			if (category) {
+				params.push(`lower(ec.name) = lower($${cont})`);
 				values.push(category);
-			}
-			if (startdate != undefined) {
-				sql += ` AND e.start_date = $${cont}`;
 				cont++;
+			}
+			if (startdate) {
+				params.push(`e.start_date = $${cont}`);
 				values.push(startdate);
-			}
-			if (tag != undefined) {
-				sql += ` AND e.id IN (SELECT id_event FROM event_tags WHERE id_tag = (SELECT id FROM tags WHERE name = $${cont}))`;
 				cont++;
-				values.push(tag);
 			}
+			if (tag) {
+				params.push(`lower(t.name) = lower($${cont})`);
+				values.push(tag);
+				cont++;
+			}
+
+			if (params.length > 0) {
+				sql += ' WHERE ' + params.join(' AND ');
+			}
+			sql +=
+				' GROUP BY e.id, e.name, e.description, e.start_date, e.duration_in_minutes, e.price, e.enabled_for_enrollment, e.max_assistance, ec.name;';
+
 			const result = await client.query(sql, values);
 			return result.rows;
 		} finally {
@@ -132,54 +142,39 @@ export default class EventRepository {
 		const client = await pool.connect();
 		try {
 			let sql =
-				'SELECT ee.id_event, u.first_name, u.last_name, u.username, ee.attended, ee.rating FROM users AS u INNER JOIN event_enrollments AS ee ON ee.id_user = u.id ';
-			const values = [];
-			let whereClause = false;
+				'SELECT ee.id_event, u.first_name, u.last_name, u.username, ee.attended, ee.rating FROM users AS u INNER JOIN event_enrollments AS ee ON ee.id_user = u.id WHERE u.id = $1';
+			const params = [];
+			const values = [id];
+			let cont = 2;
 
-			if (id) {
-				sql += `WHERE ee.id_event = $1 `;
-				values.push(id);
-				whereClause = true;
-			}
-
-			if (first_name !== undefined) {
-				if (whereClause) sql += 'AND ';
-				else sql += 'WHERE ';
-				sql += `WHERE u.first_name = $1 `;
+			if (first_name) {
+				params.push(`u.first_name = $${cont}`);
 				values.push(first_name);
-				whereClause = true;
+				cont++;
 			}
-
-			if (last_name !== undefined) {
-				if (whereClause) sql += 'AND ';
-				else sql += 'WHERE ';
-				sql += `u.last_name = $${values.length + 1} `;
-				values.push(last_name);
-				whereClause = true;
+			if (last_name) {
+				params.push(`u.last_name = $${cont}`);
+				values.push(category);
+				cont++;
 			}
-
-			if (username !== undefined) {
-				if (whereClause) sql += 'AND ';
-				else sql += 'WHERE ';
-				sql += `u.username = $${values.length + 1} `;
+			if (username) {
+				params.push(`u.username = $${cont}`);
 				values.push(username);
-				whereClause = true;
+				cont++;
 			}
-
-			if (attended !== undefined) {
-				if (whereClause) sql += 'AND ';
-				else sql += 'WHERE ';
-				sql += `ee.attended = $${values.length + 1} `;
+			if (attended) {
+				params.push(`ee.attended = $${cont}`);
 				values.push(attended);
-				whereClause = true;
+				cont++;
+			}
+			if (rating) {
+				params.push(`ee.rating = $${cont}`);
+				values.push(rating);
+				cont++;
 			}
 
-			if (rating !== undefined) {
-				if (whereClause) sql += 'AND ';
-				else sql += 'WHERE ';
-				sql += `ee.rating >= $${values.length + 1} `;
-				values.push(rating);
-				whereClause = true;
+			if (params.length > 0) {
+				sql += ' AND ' + params.join(' AND ');
 			}
 
 			const result = await client.query(sql, values);

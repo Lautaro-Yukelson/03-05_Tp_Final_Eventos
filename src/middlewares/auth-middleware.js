@@ -29,7 +29,7 @@ function authMiddleware(req, res, next) {
 		authHeader = removeBearerFromToken(authHeader);
 		undoToken(authHeader)
 			.then((decodedToken) => {
-				req.user = decodedToken;
+				req.body.user = decodedToken;
 				next();
 			})
 			.catch((error) => {

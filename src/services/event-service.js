@@ -39,7 +39,7 @@ export default class EventService {
 		}
 	}
 
-	async addEvent({ body, user }) {
+	async addEvent({ body }) {
 		try {
 			const {
 				name,
@@ -81,7 +81,7 @@ export default class EventService {
 				];
 			}
 
-			await this.repo.addEvent(body, user.id);
+			await this.repo.addEvent(body, body.user.id);
 			return [{ success: true, message: 'Evento creado correctamente' }, 201];
 		} catch (error) {
 			throw new Error('Service error - addEvent({body}): \n' + error);
@@ -94,6 +94,7 @@ export default class EventService {
 			if (!event) {
 				return [{ success: false, message: 'Evento no encontrado' }, 404];
 			}
+			
 			if (event.id_creator_user !== body.user.id) {
 				return [
 					{
@@ -266,6 +267,7 @@ export default class EventService {
 	}
 
 	async updateEnrollment(eventId, rating, user, observations = '') {
+		console.log(user);
 		try {
 			const event = await this.repo.getEventDetails(eventId);
 			if (event.length === 0) {
