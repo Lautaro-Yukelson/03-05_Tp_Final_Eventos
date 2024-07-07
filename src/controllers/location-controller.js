@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import LocationService from '../services/location-service.js';
+import authMiddleware from '../middlewares/auth-middleware.js';
 
 const router = Router();
 const svc = new LocationService();
@@ -28,7 +29,8 @@ router.get(
 );
 
 router.get(
-	'/:id/event-locations',
+	'/:id/event-location',
+	authMiddleware,
 	handleRequest((req) => svc.getEventLocations(req.params.id)),
 );
 

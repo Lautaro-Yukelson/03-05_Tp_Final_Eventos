@@ -16,6 +16,17 @@ export default class ProvinceService {
 		}
 	}
 
+	async getLocationsByProvince(id) {
+		try {
+			const response = await this.repo.getLocationsByProvince(id);
+			return response.length > 0
+				? [{ success: true, response }, 200]
+				: [{ success: false, message: 'No hay ubicaciones para mostrar' }, 404];
+		} catch (error) {
+			throw new Error(`Service error - getLocationsByProvince() : ${error.message}`);
+		}
+	}
+
 	async getProvinceById(id) {
 		try {
 			const response = await this.repo.getProvinceById(id);

@@ -27,6 +27,17 @@ export default class ProvinceRepository {
 		}
 	}
 
+	async getLocationsByProvince(id) {
+		const client = await pool.connect();
+		try {
+			const sql = 'select * from locations where id_province = $1';
+			const result = await client.query(sql, [id]);
+			return result.rows;
+		} finally {
+			client.release();
+		}
+	}
+
 	async addProvince({ name, full_name, latitude, longitude, display_order }) {
 		const client = await pool.connect();
 		try {

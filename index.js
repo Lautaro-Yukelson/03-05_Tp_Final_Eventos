@@ -14,8 +14,8 @@ app.use(express.json());
 app.use('/api/province', ProvinceRouter);
 app.use('/api/event', EventRouter);
 app.use('/api/user', UserRouter);
-app.use('/api/locations', LocationController);
-app.use('/api/event_category', EventCategoryController);
+app.use('/api/location', LocationController);
+app.use('/api/event-category', EventCategoryController);
 
 app.listen(port, () => {
 	console.log('Aplicacion abierta en el puerto: ', port);

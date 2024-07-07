@@ -27,6 +27,11 @@ router.get(
 	handleRequest((req) => svc.getProvinceById(req.params.id)),
 );
 
+router.get(
+	'/:id/locations',
+	handleRequest((req) => svc.getLocationsByProvince(req.params.id)),
+);
+
 router.post(
 	'/',
 	handleRequest((req) => svc.addProvince(req.body)),

@@ -48,7 +48,7 @@ router.put(
 router.delete(
 	'/:id',
 	authMiddleware,
-	handleRequest((req) => svc.deleteEvent(req.params.id, req.body.user)),
+	handleRequest((req) => svc.deleteEvent(req.params.id, req.user)),
 );
 
 router.post(

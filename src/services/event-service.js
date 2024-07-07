@@ -88,13 +88,14 @@ export default class EventService {
 		}
 	}
 
-	async updateEvent({ body }) {
+	async updateEvent(req) {
 		try {
+			const { body, user } = req;
 			const [event] = await this.repo.getEventDetails(body.id);
 			if (!event) {
 				return [{ success: false, message: 'Evento no encontrado' }, 404];
 			}
-			if (event.id_creator_user !== body.user.id) {
+			if (event.id_creator_user !== user.id) {
 				return [
 					{
 						success: false,
