@@ -5,6 +5,7 @@ import EventRouter from './src/controllers/event-controller.js';
 import UserRouter from './src/controllers/user-controller.js';
 import LocationController from './src/controllers/location-controller.js';
 import EventCategoryController from './src/controllers/event_category-controller.js';
+import EventLocationController from './src/controllers/event_location-controller.js';
 
 const app = express();
 const port = 3000;
@@ -16,6 +17,7 @@ app.use('/api/event', EventRouter);
 app.use('/api/user', UserRouter);
 app.use('/api/location', LocationController);
 app.use('/api/event-category', EventCategoryController);
+app.use('/api/event-location', EventLocationController);
 
 app.listen(port, () => {
 	console.log('Aplicacion abierta en el puerto: ', port);
