@@ -5,7 +5,7 @@
 -- Dumped from database version 16.3
 -- Dumped by pg_dump version 16.3
 
--- Started on 2024-07-07 15:59:59
+-- Started on 2024-07-07 17:22:06
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -17,25 +17,6 @@ SET check_function_bodies = false;
 SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
-
---
--- TOC entry 4 (class 2615 OID 2200)
--- Name: public; Type: SCHEMA; Schema: -; Owner: pg_database_owner
---
-
-CREATE SCHEMA public;
-
-
-ALTER SCHEMA public OWNER TO pg_database_owner;
-
---
--- TOC entry 4922 (class 0 OID 0)
--- Dependencies: 4
--- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: pg_database_owner
---
-
-COMMENT ON SCHEMA public IS 'standard public schema';
-
 
 SET default_tablespace = '';
 
@@ -333,10 +314,12 @@ ALTER TABLE public.users ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 -- Data for Name: event_categories; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.event_categories OVERRIDING SYSTEM VALUE VALUES (1, 'Conferencias', 1);
-INSERT INTO public.event_categories OVERRIDING SYSTEM VALUE VALUES (2, 'Talleres', 2);
-INSERT INTO public.event_categories OVERRIDING SYSTEM VALUE VALUES (3, 'Seminarios', 3);
-INSERT INTO public.event_categories OVERRIDING SYSTEM VALUE VALUES (4, 'Webinars', 4);
+COPY public.event_categories (id, name, display_order) FROM stdin;
+1	Conferencias	1
+2	Talleres	2
+3	Seminarios	3
+4	Webinars	4
+\.
 
 
 --
@@ -345,10 +328,11 @@ INSERT INTO public.event_categories OVERRIDING SYSTEM VALUE VALUES (4, 'Webinars
 -- Data for Name: event_enrollments; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.event_enrollments OVERRIDING SYSTEM VALUE VALUES (2, 2, 2, 'Quiero aprender a programar', '2024-06-05 11:00:00', true, 'Excelente taller', 4);
-INSERT INTO public.event_enrollments OVERRIDING SYSTEM VALUE VALUES (3, 3, 3, 'Interesado en salud', '2024-06-10 12:00:00', false, 'No pude asistir', 3);
-INSERT INTO public.event_enrollments OVERRIDING SYSTEM VALUE VALUES (4, 4, 4, 'Interesado en finanzas', '2024-06-15 13:00:00', true, 'Muy útil', 5);
-INSERT INTO public.event_enrollments OVERRIDING SYSTEM VALUE VALUES (1, 1, 1, 'Interesado en nuevas tecnologías', '2024-06-01 10:00:00', true, 'Fue increíble!!. Conviene estacionar lejos!!!!', 8);
+COPY public.event_enrollments (id, id_event, id_user, description, registration_date_time, attended, observations, rating) FROM stdin;
+2	2	2	Quiero aprender a programar	2024-06-05 11:00:00	t	Excelente taller	4
+3	3	3	Interesado en salud	2024-06-10 12:00:00	f	No pude asistir	3
+4	4	4	Interesado en finanzas	2024-06-15 13:00:00	t	Muy útil	5
+\.
 
 
 --
@@ -357,10 +341,12 @@ INSERT INTO public.event_enrollments OVERRIDING SYSTEM VALUE VALUES (1, 1, 1, 'I
 -- Data for Name: event_locations; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.event_locations OVERRIDING SYSTEM VALUE VALUES (1, 1, 'Centro de Convenciones', 'Calle Falsa 123', 500, -34.6037, -58.3816, 1);
-INSERT INTO public.event_locations OVERRIDING SYSTEM VALUE VALUES (2, 2, 'Sala de Conferencias', 'Calle Real 456', 200, -34.6118, -58.4173, 2);
-INSERT INTO public.event_locations OVERRIDING SYSTEM VALUE VALUES (3, 3, 'Auditorio Central', 'Av. Siempreviva 789', 300, -34.6090, -58.3900, 3);
-INSERT INTO public.event_locations OVERRIDING SYSTEM VALUE VALUES (4, 4, 'Espacio Cultural', 'Boulevard Ficticio 1011', 100, -34.6158, -58.4333, 4);
+COPY public.event_locations (id, id_location, name, full_address, max_capacity, latitude, longitude, id_creator_user) FROM stdin;
+1	1	Centro de Convenciones	Calle Falsa 123	500	-34.6037	-58.3816	1
+2	2	Sala de Conferencias	Calle Real 456	200	-34.6118	-58.4173	2
+3	3	Auditorio Central	Av. Siempreviva 789	300	-34.6090	-58.3900	3
+4	4	Espacio Cultural	Boulevard Ficticio 1011	100	-34.6158	-58.4333	4
+\.
 
 
 --
@@ -369,11 +355,13 @@ INSERT INTO public.event_locations OVERRIDING SYSTEM VALUE VALUES (4, 4, 'Espaci
 -- Data for Name: event_tags; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.event_tags OVERRIDING SYSTEM VALUE VALUES (1, 1, 1);
-INSERT INTO public.event_tags OVERRIDING SYSTEM VALUE VALUES (2, 1, 3);
-INSERT INTO public.event_tags OVERRIDING SYSTEM VALUE VALUES (3, 2, 1);
-INSERT INTO public.event_tags OVERRIDING SYSTEM VALUE VALUES (4, 3, 2);
-INSERT INTO public.event_tags OVERRIDING SYSTEM VALUE VALUES (5, 4, 4);
+COPY public.event_tags (id, id_event, id_tag) FROM stdin;
+1	1	1
+2	1	3
+3	2	1
+4	3	2
+5	4	4
+\.
 
 
 --
@@ -382,11 +370,13 @@ INSERT INTO public.event_tags OVERRIDING SYSTEM VALUE VALUES (5, 4, 4);
 -- Data for Name: events; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.events OVERRIDING SYSTEM VALUE VALUES (1, 'Conferencia de Tecnología', 'Una conferencia sobre los últimos avances en tecnología.', 1, 1, '2024-06-01 10:00:00', 90, 50, true, 100, 1, 100);
-INSERT INTO public.events OVERRIDING SYSTEM VALUE VALUES (2, 'Taller de Programación', 'Un taller práctico para aprender a programar.', 2, 2, '2024-06-05 11:00:00', 120, 30, true, 50, 2, 100);
-INSERT INTO public.events OVERRIDING SYSTEM VALUE VALUES (3, 'Seminario de Salud', 'Un seminario sobre la importancia de la salud.', 3, 3, '2024-06-10 12:00:00', 60, 20, true, 75, 3, 100);
-INSERT INTO public.events OVERRIDING SYSTEM VALUE VALUES (4, 'Webinar de Finanzas', 'Un webinar sobre la gestión de finanzas personales.', 4, 4, '2024-06-15 13:00:00', 45, 0, true, 150, 4, 100);
-INSERT INTO public.events OVERRIDING SYSTEM VALUE VALUES (5, 'Confera de logía', 'Una conferencia sobre las últimas tendencias en tecnología.', 2, 1, '2024-06-15 10:00:00', 120, 50, true, 100, 150, NULL);
+COPY public.events (id, name, description, id_event_category, id_event_location, start_date, duration_in_minutes, price, enabled_for_enrollment, max_assistance, id_creator_user, max_capacity) FROM stdin;
+1	Conferencia de Tecnología	Una conferencia sobre los últimos avances en tecnología.	1	1	2024-12-12 00:00:00	90	50	t	100	1	100
+2	Taller de Programación	Un taller práctico para aprender a programar.	2	2	2024-12-12 00:00:00	120	30	t	50	2	100
+3	Seminario de Salud	Un seminario sobre la importancia de la salud.	3	3	2024-12-12 00:00:00	60	20	t	75	3	100
+4	Webinar de Finanzas	Un webinar sobre la gestión de finanzas personales.	4	4	2024-12-12 00:00:00	45	0	t	150	4	100
+5	Confera de logía	Una conferencia sobre las últimas tendencias en tecnología.	2	1	2024-12-12 00:00:00	120	50	t	100	150	\N
+\.
 
 
 --
@@ -395,10 +385,12 @@ INSERT INTO public.events OVERRIDING SYSTEM VALUE VALUES (5, 'Confera de logía'
 -- Data for Name: locations; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.locations OVERRIDING SYSTEM VALUE VALUES (1, 'Buenos Aires', 1, -34.6037, -58.3816);
-INSERT INTO public.locations OVERRIDING SYSTEM VALUE VALUES (2, 'Córdoba', 2, -31.4201, -64.1888);
-INSERT INTO public.locations OVERRIDING SYSTEM VALUE VALUES (3, 'Rosario', 3, -32.9442, -60.6505);
-INSERT INTO public.locations OVERRIDING SYSTEM VALUE VALUES (4, 'Mendoza', 4, -32.8894, -68.8458);
+COPY public.locations (id, name, id_province, latitude, longitude) FROM stdin;
+1	Buenos Aires	1	-34.6037	-58.3816
+2	Córdoba	2	-31.4201	-64.1888
+3	Rosario	3	-32.9442	-60.6505
+4	Mendoza	4	-32.8894	-68.8458
+\.
 
 
 --
@@ -407,10 +399,12 @@ INSERT INTO public.locations OVERRIDING SYSTEM VALUE VALUES (4, 'Mendoza', 4, -3
 -- Data for Name: provinces; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (1, 'BA', 'Buenos Aires', -34.6037, -58.3816, 1);
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (2, 'CD', 'Córdoba', -31.4201, -64.1888, 2);
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (3, 'RS', 'Rosario', -32.9442, -60.6505, 3);
-INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (4, 'MD', 'Mendoza', -32.8894, -68.8458, 4);
+COPY public.provinces (id, name, full_name, latitude, longitude, display_order) FROM stdin;
+1	BA	Buenos Aires	-34.6037	-58.3816	1
+2	CD	Córdoba	-31.4201	-64.1888	2
+3	RS	Rosario	-32.9442	-60.6505	3
+4	MD	Mendoza	-32.8894	-68.8458	4
+\.
 
 
 --
@@ -419,10 +413,12 @@ INSERT INTO public.provinces OVERRIDING SYSTEM VALUE VALUES (4, 'MD', 'Mendoza',
 -- Data for Name: tags; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.tags OVERRIDING SYSTEM VALUE VALUES (1, 'Tecnología');
-INSERT INTO public.tags OVERRIDING SYSTEM VALUE VALUES (2, 'Salud');
-INSERT INTO public.tags OVERRIDING SYSTEM VALUE VALUES (3, 'Innovación');
-INSERT INTO public.tags OVERRIDING SYSTEM VALUE VALUES (4, 'Finanzas');
+COPY public.tags (id, name) FROM stdin;
+1	Tecnología
+2	Salud
+3	Innovación
+4	Finanzas
+\.
 
 
 --
@@ -431,14 +427,17 @@ INSERT INTO public.tags OVERRIDING SYSTEM VALUE VALUES (4, 'Finanzas');
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.users OVERRIDING SYSTEM VALUE VALUES (1, 'Juan', 'Pérez', 'juanp@gmail.com', 'password123');
-INSERT INTO public.users OVERRIDING SYSTEM VALUE VALUES (2, 'María', 'García', 'mariag@gmail.com', 'password123');
-INSERT INTO public.users OVERRIDING SYSTEM VALUE VALUES (3, 'Carlos', 'López', 'carlosl@gmail.com', 'password123');
-INSERT INTO public.users OVERRIDING SYSTEM VALUE VALUES (4, 'Ana', 'Martínez', 'anam@gmail.com', 'password123');
+COPY public.users (id, first_name, last_name, username, password) FROM stdin;
+1	Juan	Pérez	juanp@gmail.com	password123
+2	María	García	mariag@gmail.com	password123
+3	Carlos	López	carlosl@gmail.com	password123
+4	Ana	Martínez	anam@gmail.com	password123
+5	Lautaro	Yukelson	lautiyuke@gmail.com	lauti123
+\.
 
 
 --
--- TOC entry 4923 (class 0 OID 0)
+-- TOC entry 4922 (class 0 OID 0)
 -- Dependencies: 216
 -- Name: event_categories_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -447,16 +446,16 @@ SELECT pg_catalog.setval('public.event_categories_id_seq', 4, true);
 
 
 --
--- TOC entry 4924 (class 0 OID 0)
+-- TOC entry 4923 (class 0 OID 0)
 -- Dependencies: 218
 -- Name: event_enrollments_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.event_enrollments_id_seq', 4, true);
+SELECT pg_catalog.setval('public.event_enrollments_id_seq', 5, true);
 
 
 --
--- TOC entry 4925 (class 0 OID 0)
+-- TOC entry 4924 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: event_locations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -465,7 +464,7 @@ SELECT pg_catalog.setval('public.event_locations_id_seq', 4, true);
 
 
 --
--- TOC entry 4926 (class 0 OID 0)
+-- TOC entry 4925 (class 0 OID 0)
 -- Dependencies: 222
 -- Name: event_tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -474,7 +473,7 @@ SELECT pg_catalog.setval('public.event_tags_id_seq', 5, true);
 
 
 --
--- TOC entry 4927 (class 0 OID 0)
+-- TOC entry 4926 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: events_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -483,7 +482,7 @@ SELECT pg_catalog.setval('public.events_id_seq', 5, true);
 
 
 --
--- TOC entry 4928 (class 0 OID 0)
+-- TOC entry 4927 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: locations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -492,7 +491,7 @@ SELECT pg_catalog.setval('public.locations_id_seq', 4, true);
 
 
 --
--- TOC entry 4929 (class 0 OID 0)
+-- TOC entry 4928 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: provinces_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -501,7 +500,7 @@ SELECT pg_catalog.setval('public.provinces_id_seq', 4, true);
 
 
 --
--- TOC entry 4930 (class 0 OID 0)
+-- TOC entry 4929 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: tags_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -510,12 +509,12 @@ SELECT pg_catalog.setval('public.tags_id_seq', 4, true);
 
 
 --
--- TOC entry 4931 (class 0 OID 0)
+-- TOC entry 4930 (class 0 OID 0)
 -- Dependencies: 232
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 4, true);
+SELECT pg_catalog.setval('public.users_id_seq', 5, true);
 
 
 --
@@ -671,7 +670,7 @@ ALTER TABLE ONLY public.event_enrollments
     ADD CONSTRAINT fk_user FOREIGN KEY (id_user) REFERENCES public.users(id) ON DELETE CASCADE;
 
 
--- Completed on 2024-07-07 16:00:00
+-- Completed on 2024-07-07 17:22:06
 
 --
 -- PostgreSQL database dump complete
