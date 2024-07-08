@@ -19,6 +19,10 @@ app.use('/api/location', LocationController);
 app.use('/api/event-category', EventCategoryController);
 app.use('/api/event-location', EventLocationController);
 
+app.use((req, res, next) => {
+  res.status(404).json({ message: 'Ruta no encontrada' });
+});
+
 app.listen(port, () => {
-	console.log('Aplicacion abierta en el puerto: ', port);
+  console.log('Aplicacion abierta en el puerto: ', port);
 });

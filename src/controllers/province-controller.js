@@ -38,8 +38,8 @@ router.post(
 );
 
 router.put(
-	'/:id',
-	handleRequest((req) => svc.updateProvince(req.params.id, req.body)),
+	'/',
+	handleRequest((req) => svc.updateProvince(req.body)),
 );
 
 router.delete(

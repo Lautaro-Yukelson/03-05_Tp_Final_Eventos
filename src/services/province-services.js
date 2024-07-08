@@ -62,7 +62,8 @@ export default class ProvinceService {
 		}
 	}
 
-	async updateProvince(id, data) {
+	async updateProvince(body) {
+		const data = body;
 		if (data.name.length < 3) {
 			return [
 				{
@@ -82,11 +83,11 @@ export default class ProvinceService {
 			];
 		}
 		try {
-			const [province] = await this.getProvinceById(id);
+			const [province] = await this.getProvinceById(body.id);
 			if (!province.success) {
 				return [{ success: false, message: 'No existe una provincia con ese ID' }, 404];
 			}
-			await this.repo.updateProvince(id, data);
+			await this.repo.updateProvince(body.id, data);
 			return [{ success: true, message: 'Provincia editada correctamente' }, 200];
 		} catch (error) {
 			throw new Error(`Service error - updateProvince() : ${error.message}`);
