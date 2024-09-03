@@ -31,6 +31,6 @@ export function validateUserData({
 
 export function generateToken(user) {
 	const secretKey = process.env.SECRETKEYJWT;
-	const options = { expiresIn: '1h', issuer: 'eventsManagement' };
+	const options = { expiresIn: '1d', issuer: 'eventsManagement' };
 	return jwt.sign(user, secretKey, options);
 }

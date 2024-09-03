@@ -28,6 +28,7 @@ export default class UserService {
 			if (user.password !== password) {
 				return [{ success: false, message: ['Contraseña incorrecta'], token: '' }, 401];
 			}
+			delete user.password;
 			const token = generateToken(user);
 			return [
 				{ success: true, message: ['Sesión iniciada correctamente'], token },

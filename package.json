@@ -5,6 +5,7 @@
 	"description": "Yukelson - Steimberg - TP Final Eventos - DAI",
 	"main": "index.js",
 	"scripts": {
+		"start": "node index.js",
 		"dev": "nodemon index.js"
 	},
 	"author": "Lautaro Yukelson & Iair Steimberg",
